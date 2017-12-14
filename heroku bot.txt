@@ -1,0 +1,19 @@
+create a file Procfile:
+web: gunicorn echoserver:app
+
+pip freeze >requirements.txt
+
+virtualenv <xxxxx>
+
+cd xxxxx/...../activate.bat
+
+
+Procfile     echobot     echoserver.py   requirements.txt
+
+(echobot) kostis@KostisMBP echoserver $ heroku login
+(echobot) kostis@KostisMBP echoserver $ git init
+(echobot) kostis@KostisMBP echoserver $ heroku git:remote -a <myappname>
+(echobot) kostis@KostisMBP echoserver $ git add .
+(echobot) kostis@KostisMBP echoserver $ git commit -m "Initial commit"
+(echobot) kostis@KostisMBP echoserver (master) $ git push heroku master
+
