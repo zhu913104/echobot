@@ -1,3 +1,4 @@
+# coding=utf-8
 from flask import Flask, request, abort
 
 from linebot import (
@@ -6,10 +7,8 @@ from linebot import (
 from linebot.exceptions import (
     InvalidSignatureError
 )
-from linebot.models import (
-    MessageEvent, TextMessage, TextSendMessage,
-)
-
+from linebot.models import *
+import random
 app = Flask(__name__)
 
 line_bot_api = LineBotApi('/LpvO9eD68kXp+5HCnn34zqoQBks8PCZ0bLsx7UMLuSAWyMkc47FixZ3XrbSkG6aPbAsmDiknQjWG5KWJ99/XupRxBOavhUMra6Iquh69mfq76cfif+k1YjZcGJUBFwCJUYQZ/3Tw//lgRr5hjPvbgdB04t89/1O/w1cDnyilFU=')
@@ -35,9 +34,75 @@ def callback():
 
 
 @handler.add(MessageEvent, message=TextMessage)
-def handle_message(event):
-    line_bot_api.reply_message(event.reply_token,TextSendMessage(text=event.message.text))
+# def handle_message(event):
+#     line_bot_api.reply_message(event.reply_token,TextSendMessage(text=event.message.text))
 
+def handle_message(event):
+    if event.message.text == "沒事啦":
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text="那你按三小"))
+        return 0
+    if event.message.text == "回傳數值":
+        data = random.randint(0,100)
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text=data))
+        return 0
+    if event.message.text == "控制指令":
+        buttons_template = TemplateSendMessage(
+            alt_text='目錄 template',
+            template=ButtonsTemplate(
+                title='安安',
+                text='我是志偉',
+                thumbnail_image_url='https://imgur.com/WuCndWo.jpg',
+                actions=[
+                    MessageTemplateAction(
+                        label='抽水馬達',
+                        text='抽水馬達'
+                    ),
+                    MessageTemplateAction(
+                        label='循環馬達',
+                        text='循環馬達'
+                    ),
+                    MessageTemplateAction(
+                        label='LED燈',
+                        text='LED燈'
+                    ),
+
+                ]
+            )
+        )
+        line_bot_api.reply_message(event.reply_token, buttons_template)
+        return 0
+    buttons_template = TemplateSendMessage(
+        alt_text='目錄 template',
+        template=ButtonsTemplate(
+            title='安安',
+            text='我是志偉',
+            thumbnail_image_url='https://imgur.com/WuCndWo.jpg',
+            actions=[
+                MessageTemplateAction(
+                    label='回傳數值',
+                    text='回傳數值'
+                ),
+                URITemplateAction(
+                    label='定估隻',
+                    uri='https://www.youtube.com/watch?v=UftRC4HoSbA'
+                ),
+                URITemplateAction(
+                    label='github',
+                    uri='https://github.com/zhu913104'
+                ),
+                URITemplateAction(
+                    label='聯絡作者',
+                    uri='https://www.facebook.com/chan.c.wei.9'
+                ),
+
+            ]
+        )
+    )
+    line_bot_api.reply_message(event.reply_token, buttons_template)
 
 if __name__ == "__main__":
     app.run()
