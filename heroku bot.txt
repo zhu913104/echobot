@@ -16,4 +16,4 @@ Procfile     echobot     echoserver.py   requirements.txt
 (echobot) kostis@KostisMBP echoserver $ git add .
 (echobot) kostis@KostisMBP echoserver $ git commit -m "Initial commit"
 (echobot) kostis@KostisMBP echoserver (master) $ git push heroku master
-
+(echobot) kostis@KostisMBP echoserver (master) $ heroku config:set WEB_CONCURRENCY=3
