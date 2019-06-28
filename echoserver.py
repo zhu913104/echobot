@@ -43,7 +43,7 @@ def handle_message(event):
     if event.message.text == "沒事啦":
         line_bot_api.reply_message(
             event.reply_token,
-            TextSendMessage(text="那你按三小"))
+            TextSendMessage(text="OK"))
         return 0
     if event.message.text == "回傳數值":
         data = random.randint(0,100)
